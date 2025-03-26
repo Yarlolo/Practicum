@@ -9,7 +9,7 @@ async def lifespan(app: FastAPI):
     print("Starting up...")
     Base_class.metadata.create_all(bind=engine)
     yield
-    print("Shutting down...")
+    print('Завершение...')
 
 app = FastAPI(lifespan=lifespan)
 
@@ -20,11 +20,11 @@ app.include_router(graph.router, prefix="/api", tags=["graph"])
 @app.get("/")
 def read_root():
     return {
-        "сообщение": "Добро пожаловать в API для работы с графами",
+        'сообщение': 'Добро пожаловать в API для работы с графами',
         "доступные_методы": {
-            "регистрация": "/api/регистрация/",
-            "авторизация": "/api/вход/",
-            "поиск_пути": "/api/кратчайший-путь/"
+            'регистрация': '/api/регистрация/',
+            'авторизация': '/api/вход/',
+            'поиск_пути': '/api/кратчайший-путь/'
         },
-        "время_сервера": datetime.now(timezone.utc).isoformat()
+        'время_сервера': datetime.now(timezone.utc).isoformat()
     }
