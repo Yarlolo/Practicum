@@ -16,7 +16,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(auth.router, prefix='/api', tags=['auth'])
 app.include_router(graph.router, prefix='/api', tags=['graph'])
 
-@app.get("/")
+@app.get('/')
 def read_root():
     return {
         'сообщение': 'Добро пожаловать в API для работы с графами',
