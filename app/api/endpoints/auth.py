@@ -15,20 +15,19 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail='Email уже зарегистрирован')
     if "@" not in user.email:
-        raise HTTPException(status_code=422, detail="Некорректный формат email")
+        raise HTTPException(status_code=422, detail='Некорректный формат email')
 
     return create_new_user(db=db, user=user)
 
 
 @router.post('/вход/')
 def login_user(user: UserCreate, db: Session = Depends(get_db)):
-    # Проверка формата email перед поиском в БД
+
     if '@' not in user.email or '.' not in user.email.split('@')[-1]:
         raise HTTPException(status_code=422, detail='Некорректный формат email')
 
     db_user = get_user_by_email(db, email=user.email)
 
-    # Проверка активности пользователя
     if db_user and not db_user.is_active:
         raise HTTPException(status_code=403, detail='Аккаунт деактивирован')
 
