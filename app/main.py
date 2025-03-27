@@ -6,21 +6,21 @@ from app.api.endpoints import auth, graph
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Starting up...")
+    print('Старт...')
     Base_class.metadata.create_all(bind=engine)
     yield
     print('Завершение...')
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(auth.router, prefix="/api", tags=["auth"])
-app.include_router(graph.router, prefix="/api", tags=["graph"])
+app.include_router(auth.router, prefix="/api", tags=['auth'])
+app.include_router(graph.router, prefix="/api", tags=['graph'])
 
 @app.get("/")
 def read_root():
     return {
         'сообщение': 'Добро пожаловать в API для работы с графами',
-        "доступные_методы": {
+        'доступные_методы': {
             'регистрация': '/api/регистрация/',
             'авторизация': '/api/вход/',
             'поиск_пути': '/api/кратчайший-путь/'
